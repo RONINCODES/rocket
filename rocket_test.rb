@@ -78,7 +78,49 @@ class RocketTest < Minitest::Test
     #assert @rocket.flying? == false
   end
 
-  def test_lift_off_when
+  def test_lift_off_rocket_not_flying
+    #1) if rocket is in flight then lift off is false as it is already in the air.
+
+    @rocket = Rocket.new
+    assert(@rocket.lift_off)
+  end
+
+  def test_lift_off_rocket_flying
+    #2) if rocket is not in flight then Lift Off is possible - so it should return true
+    @rocket = Rocket.new
+
+    # make rocket flying
+    @rocket.lift_off
+
+    refute(@rocket.lift_off)
+
+  end
+
+
+  def test_land_rocket_when_not_flying
+    #1)if rocket is flying(true), then reset @flying to false and land returns true
+    @rocket = Rocket.new
+    refute(@rocket.land)
+  end
+
+   def test_land_rocket_flying
+     @rocket = Rocket.new( { :flying => "yes" } )
+     assert(@rocket.land)
+   end
+
+   def test_status_message_of_rocket_when_flying
+     @rocket = Rocket.new( { :flying => "yes", :name => "bob" } )
+     assert_equal(@rocket.status,"Rocket bob is flying through the sky!")
+   end
+
+   def test_status_message_of_rocket_when_not_flying
+     @rocket = Rocket.new( { :name => "bob" } )
+     assert_equal(@rocket.status, "Rocket bob is ready for lift off!" )
+   end
+
+  #   @rocket.
+  #   assert(@rocket.land)
+  # end
 
  # def test_name=(new_name)
  # end
